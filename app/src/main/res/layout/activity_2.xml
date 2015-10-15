@@ -71,4 +71,13 @@
         android:layout_alignBottom="@+id/e_Puntuacion"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continuar"
+        android:id="@+id/b_Continuar"
+        android:onClick="accionBotonContinuar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/e_Puntuacion" />
+
 </RelativeLayout>

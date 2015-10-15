@@ -52,6 +52,55 @@
         android:layout_marginTop="42dp"
         android:max="100"
         android:indeterminate="false"
-        android:layout_alignEnd="@+id/r_Valoracion" />
+        android:layout_alignEnd="@+id/s_Conduccion" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Datos obtenidos de Activity 2:"
+        android:id="@+id/texto2"
+        android:layout_below="@+id/s_Puntuacion"
+        android:layout_alignStart="@+id/s_Puntuacion" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e_carnet"
+        android:layout_below="@+id/texto2"
+        android:layout_alignEnd="@+id/s_Conduccion"
+        android:layout_alignStart="@+id/texto2"
+        android:editable="false"
+        android:enabled="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e_Valoracion"
+        android:layout_below="@+id/e_carnet"
+        android:layout_alignStart="@+id/e_carnet"
+        android:layout_alignEnd="@+id/e_carnet"
+        android:enabled="false"
+        android:editable="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e_Puntuacion"
+        android:layout_below="@+id/e_Valoracion"
+        android:layout_alignStart="@+id/e_Valoracion"
+        android:layout_alignEnd="@+id/e_Valoracion"
+        android:editable="false"
+        android:enabled="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/e_infoPuntuacion"
+        android:layout_above="@+id/texto2"
+        android:layout_alignStart="@+id/b_Siguiente"
+        android:layout_alignEnd="@+id/t_Bienvenida"
+        android:editable="false"
+        android:enabled="false" />
 
 </RelativeLayout>

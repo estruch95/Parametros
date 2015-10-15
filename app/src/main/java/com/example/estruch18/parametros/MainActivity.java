@@ -16,6 +16,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
 
 public class MainActivity extends Activity {
 
@@ -24,11 +28,16 @@ public class MainActivity extends Activity {
     private RatingBar valoracionPractica;
     private SeekBar puntuacion;
     private Button siguiente;
+    private EditText puntuacionActual;
+
+    private EditText e_carnet, e_valoracion, e_puntuacion;
 
     //Variables de datos donde volcaremos las selecciones del usuario
     private String carnet;
     private Float valoracionSeleccionada;
     private int progreso;
+
+    private static final int ACTIVITY2=2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,14 @@ public class MainActivity extends Activity {
         valoracionPractica = (RatingBar)findViewById(R.id.r_Valoracion);
         puntuacion = (SeekBar)findViewById(R.id.s_Puntuacion);
         siguiente = (Button)findViewById(R.id.b_Siguiente);
+        puntuacionActual = (EditText)findViewById(R.id.e_infoPuntuacion);
+
+        e_carnet = (EditText)findViewById(R.id.e_carnet);
+        e_valoracion = (EditText)findViewById(R.id.e_Valoracion);
+        e_puntuacion = (EditText)findViewById(R.id.e_Puntuacion);
+
+        //Ejecución de métodos
+        actualizarSeekBar();
     }
 
     @Override
@@ -90,6 +107,33 @@ public class MainActivity extends Activity {
         //Toast.makeText(getApplicationContext(),String.valueOf(progreso), Toast.LENGTH_SHORT).show();
     }
 
+    public void mostrarPuntuacion(){
+        String punt = String.valueOf(puntuacion.getProgress());
+        puntuacionActual.setText(punt + " %");
+    }
+
+    public void actualizarSeekBar(){
+        String punt = String.valueOf(puntuacion.getProgress());
+        puntuacionActual.setText(punt + " %");
+
+        puntuacion.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mostrarPuntuacion();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                mostrarPuntuacion();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mostrarPuntuacion();
+            }
+        });
+    }
+
     public void accionBotonSiguiente(View v){
         siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +142,7 @@ public class MainActivity extends Activity {
                 seleccionSwitch();
                 seleccionValoracion();
                 seleccionPuntuacion();
+                mostrarPuntuacion();
 
                 //Declaración de Intent para cambio a Activity2
                 Intent act2 = new Intent(getApplicationContext(), Activity2.class);
@@ -108,8 +153,35 @@ public class MainActivity extends Activity {
                 act2.putExtra("numProgreso", progreso);
 
                 //Iniciamos activity2
-                startActivity(act2);
+                startActivityForResult(act2, ACTIVITY2);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case ACTIVITY2:
+                gestionActivity2(resultCode, data);
+                break;
+        }
+
+    }
+
+    public void gestionActivity2(int resultCode, Intent data){
+        if(resultCode == RESULT_OK){
+            ArrayList<String> resultado = data.getExtras().getStringArrayList("resultado");
+            Toast.makeText(getApplicationContext(),"resultados obtenidos OK", Toast.LENGTH_SHORT).show();
+
+            e_carnet.setText(resultado.get(0));
+            e_valoracion.setText(resultado.get(1));
+            e_puntuacion.setText(resultado.get(2));
+
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Error en el subActivity 2.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
